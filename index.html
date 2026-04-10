@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dulce Tentación – Postres Artesanales</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--cream:#FDF6ED;--warm:#F5E6C8;--caramel:#C8883A;--choco:#3B1F0E;--deep:#1A0A03}
+    html{scroll-behavior:smooth}
+    body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--choco);overflow-x:hidden}
+
+    /* NAV */
+    nav{position:fixed;top:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 4rem;background:rgba(253,246,237,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,136,58,.18)}
+    .nav-logo{font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--choco);letter-spacing:.04em}
+    .nav-logo span{color:var(--caramel);font-style:italic}
+    nav ul{list-style:none;display:flex;gap:2.2rem}
+    nav ul a{text-decoration:none;color:var(--choco);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;transition:color .2s}
+    nav ul a:hover{color:var(--caramel)}
+
+    /* HERO */
+    .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:78px;overflow:hidden}
+    .hero-text{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 4rem 6rem;animation:fadeUp 1s ease both}
+    .eyebrow{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--caramel);font-weight:700;margin-bottom:1.4rem}
+    .hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,5rem);line-height:1.08;color:var(--choco);margin-bottom:1.4rem}
+    .hero-title em{color:var(--caramel);font-style:italic}
+    .hero-sub{font-size:1rem;color:#7A5C40;line-height:1.75;max-width:400px;margin-bottom:2.8rem}
+    .btn-main{display:inline-block;padding:.9rem 2.2rem;background:var(--caramel);color:#fff;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:background .25s,transform .2s}
+    .btn-main:hover{background:var(--choco);transform:translateY(-2px)}
+    .btn-ghost{display:inline-block;padding:.9rem 2.2rem;background:transparent;color:var(--caramel);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;border:2px solid var(--caramel);cursor:pointer;text-decoration:none;margin-left:1rem;transition:all .25s}
+    .btn-ghost:hover{background:var(--caramel);color:#fff}
+    .hero-visual{position:relative;overflow:hidden;background:var(--warm);display:flex;align-items:center;justify-content:center}
+    .hero-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(200,136,58,.28) 0%,transparent 70%)}
+    .hero-img-wrap{position:relative;z-index:1;width:100%;height:100%}
+    .hero-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;animation:scaleIn 1.4s ease both}
+    .hero-fallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;animation:scaleIn 1.4s ease both}
+    .hero-fallback .big{font-size:clamp(7rem,13vw,12rem);line-height:1;filter:drop-shadow(0 16px 32px rgba(59,31,14,.25))}
+    .hero-fallback .subs{font-size:2.8rem;letter-spacing:.5rem;opacity:.7}
+    .hero-badge{position:absolute;bottom:3rem;left:-1.5rem;background:var(--choco);color:var(--cream);padding:1.1rem 1.8rem;font-family:'Playfair Display',serif;font-size:1rem;box-shadow:8px 8px 0 var(--caramel);animation:slideRight 1s .4s ease both;z-index:2}
+    .hero-badge strong{display:block;font-size:1.9rem;color:var(--caramel)}
+
+    /* SECTIONS */
+    section{padding:6.5rem 6rem}
+    .sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3.2vw,2.9rem);color:var(--choco);line-height:1.15;margin-bottom:1.4rem}
+    .sec-title em{color:var(--caramel);font-style:italic}
+
+    /* ABOUT */
+    .about{background:var(--choco);color:var(--cream);display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;padding:6rem}
+    .about .sec-title{color:var(--warm)}
+    .about p{color:#C8A07A;line-height:1.8}
+    .stats{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2.8rem}
+    .stat{border-top:2px solid var(--caramel);padding-top:.9rem}
+    .stat-num{font-family:'Playfair Display',serif;font-size:2.4rem;color:var(--caramel);display:block}
+    .stat-lbl{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#A07850}
+
+    /* MENU */
+    .menu{background:var(--cream)}
+    .menu-header{text-align:center;margin-bottom:4.5rem}
+    .menu-sec{margin-bottom:4.5rem}
+    .menu-sec:last-child{margin-bottom:0}
+    .sec-bar{display:flex;align-items:center;gap:1rem;margin-bottom:1.8rem}
+    .sec-bar-emoji{font-size:1.7rem}
+    .sec-bar h3{font-family:'Playfair Display',serif;font-size:1.55rem;color:var(--choco)}
+    .sec-bar-tag{font-size:.63rem;letter-spacing:.25em;text-transform:uppercase;color:var(--caramel);font-weight:700;border:1px solid var(--caramel);padding:.3rem .7rem;white-space:nowrap}
+    .sec-bar::after{content:'';flex:1;height:1px;background:rgba(200,136,58,.22)}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1.6rem}
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1.8rem}
+
+    /* CARD */
+    .card{background:#fff;border:1px solid rgba(200,136,58,.14);overflow:hidden;transition:transform .3s,box-shadow .3s}
+    .card:hover{transform:translateY(-7px);box-shadow:0 22px 44px rgba(59,31,14,.11)}
+    .card:hover .card-img img{transform:scale(1.07)}
+    .card-img{height:200px;overflow:hidden;position:relative;background:var(--warm)}
+    .card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;display:block;position:relative;z-index:1}
+    .card-fb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:5rem;z-index:0}
+    .card-fb .deco{position:absolute;font-size:1.6rem;opacity:.2}
+    .card-fb .deco.tl{top:8px;left:8px}
+    .card-fb .deco.br{bottom:8px;right:8px}
+    .g-choc{background:linear-gradient(135deg,#3B1F0E,#7A3E1A,#C8883A)}
+    .g-berry{background:linear-gradient(135deg,#6B2D5A,#A84070,#E88098)}
+    .g-citrus{background:linear-gradient(135deg,#C87820,#F5C040,#FDF690)}
+    .g-dark{background:linear-gradient(135deg,#1A0A03,#3B1F0E,#7A3E1A)}
+    .g-vanilla{background:linear-gradient(135deg,#C8A060,#E8C880,#FDF6C8)}
+    .g-caramel{background:linear-gradient(135deg,#7A4010,#C8883A,#E8B070)}
+    .g-pink{background:linear-gradient(135deg,#B05060,#E08090,#F5B0C0)}
+    .g-red{background:linear-gradient(135deg,#8B1A1A,#C04040,#E07070)}
+    .g-mint{background:linear-gradient(135deg,#3A8070,#60B0A0,#A0D8C8)}
+    .card-body{padding:1.5rem}
+    .card-name{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--choco);margin-bottom:.4rem}
+    .card-desc{font-size:.85rem;color:#7A5C40;line-height:1.6;margin-bottom:1.1rem}
+    .card-foot{display:flex;justify-content:space-between;align-items:center}
+    .card-price{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--caramel)}
+    .card-btn{background:var(--choco);color:var(--cream);border:none;padding:.55rem 1.1rem;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:background .2s}
+    .card-btn:hover{background:var(--caramel)}
+
+    /* CART FLOAT */
+    .cart-float{position:fixed;bottom:2rem;right:2rem;z-index:200;background:var(--caramel);color:#fff;border:none;padding:.95rem 1.4rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;cursor:pointer;box-shadow:6px 6px 0 var(--choco);transition:transform .2s,background .2s}
+    .cart-float:hover{background:var(--choco);transform:translateY(-2px)}
+    #cart-count{display:inline-block;background:#fff;color:var(--caramel);border-radius:50%;width:21px;height:21px;text-align:center;line-height:21px;font-size:.73rem;margin-left:.4rem;font-weight:700}
+
+    /* CART PANEL */
+    #cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:499;opacity:0;pointer-events:none;transition:opacity .3s}
+    #cart-overlay.open{opacity:1;pointer-events:all}
+    #cart-panel{position:fixed;right:0;top:0;height:100%;width:350px;background:var(--cream);z-index:500;padding:1.8rem;box-shadow:-8px 0 40px rgba(59,31,14,.18);transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+    #cart-panel.open{transform:translateX(0)}
+    .cart-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.8rem}
+    .cart-ttl{font-family:'Playfair Display',serif;font-size:1.55rem;color:var(--choco)}
+    .x-btn{background:none;border:none;font-size:1.45rem;cursor:pointer;color:var(--caramel);transition:transform .2s;line-height:1}
+    .x-btn:hover{transform:rotate(90deg)}
+    #cart-items{flex:1;overflow-y:auto}
+    .ci{display:flex;justify-content:space-between;align-items:center;padding:.9rem 0;border-bottom:1px solid rgba(200,136,58,.14)}
+    .ci-name{font-size:.88rem;color:var(--choco);font-weight:700;margin-bottom:.25rem}
+    .ci-meta{display:flex;align-items:center;gap:.7rem;margin-top:.25rem}
+    .qc{display:flex;align-items:center;gap:.35rem}
+    .qb{background:var(--warm);border:1px solid rgba(200,136,58,.3);width:23px;height:23px;cursor:pointer;font-size:.95rem;font-weight:700;color:var(--choco);display:flex;align-items:center;justify-content:center;transition:background .15s}
+    .qb:hover{background:var(--caramel);color:#fff;border-color:var(--caramel)}
+    .qn{font-size:.88rem;color:var(--choco);font-weight:700;min-width:15px;text-align:center}
+    .ci-price{font-size:.8rem;color:#A07850}
+    .ci-rm{background:none;border:none;color:#C8A07A;cursor:pointer;font-size:.95rem;flex-shrink:0;transition:color .15s}
+    .ci-rm:hover{color:var(--caramel)}
+    .cart-empty{color:#A07850;font-style:italic;text-align:center;margin-top:2.5rem;font-size:.88rem;line-height:1.7}
+    .cart-foot{border-top:2px solid var(--caramel);padding-top:1.3rem;margin-top:.8rem}
+    .cart-total{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--choco);margin-bottom:1.1rem}
+    .cart-total span{color:var(--caramel)}
+    .btn-clear{width:100%;margin-top:.65rem;background:none;border:1px solid rgba(200,136,58,.35);color:var(--caramel);padding:.65rem;cursor:pointer;font-size:.73rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;transition:all .2s}
+    .btn-clear:hover{background:var(--caramel);color:#fff}
+
+    /* ORDER MODAL */
+    .modal-ov{display:none;position:fixed;inset:0;background:rgba(26,10,3,.78);z-index:600;justify-content:center;align-items:center;padding:1rem}
+    .modal-ov.open{display:flex}
+    .modal{background:var(--cream);max-width:540px;width:100%;position:relative;animation:fadeUp .35s ease;max-height:92vh;overflow-y:auto;display:flex;flex-direction:column}
+    .modal-top{background:var(--choco);padding:1.8rem 2.4rem;position:relative;flex-shrink:0}
+    .modal-top h3{font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--warm);margin-bottom:.25rem}
+    .modal-top p{color:#C8A07A;font-size:.86rem}
+    .mcx{position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--caramel);transition:transform .2s}
+    .mcx:hover{transform:rotate(90deg)}
+    .modal-body{padding:2.2rem;flex:1}
+    .steps{display:flex;border:1px solid rgba(200,136,58,.2);margin-bottom:2rem}
+    .step{flex:1;padding:.65rem;text-align:center;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#A07850;border-right:1px solid rgba(200,136,58,.2);transition:all .3s}
+    .step:last-child{border-right:none}
+    .step.active{background:var(--caramel);color:#fff}
+    .step.done{background:var(--warm);color:var(--caramel)}
+    .step-pg{display:none}
+    .step-pg.active{display:block}
+    .ord-sum{background:var(--warm);padding:1.1rem 1.4rem;margin-bottom:1.8rem;border-left:4px solid var(--caramel)}
+    .ord-sum-ttl{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--caramel);font-weight:700;margin-bottom:.7rem}
+    .ord-sum-row{font-size:.86rem;color:var(--choco);padding:.18rem 0;display:flex;justify-content:space-between}
+    .ord-sum-tot{border-top:1px solid rgba(200,136,58,.3);margin-top:.55rem;padding-top:.55rem;font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--choco);display:flex;justify-content:space-between}
+    .ord-sum-tot span{color:var(--caramel)}
+    .f-sec{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--caramel);font-weight:700;margin-bottom:.9rem;margin-top:1.4rem;display:block}
+    .f-sec:first-child{margin-top:0}
+    .frow{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+    .fg{margin-bottom:.9rem}
+    .fg label{display:block;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#7A5C40;font-weight:700;margin-bottom:.38rem}
+    .fg input,.fg textarea,.fg select{width:100%;padding:.72rem .95rem;border:1px solid rgba(200,136,58,.3);background:#fff;font-family:'Lato',sans-serif;font-size:.88rem;color:var(--choco);outline:none;transition:border-color .2s}
+    .fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--caramel);background:#FFFBF5}
+    .fg textarea{resize:vertical;min-height:80px}
+    .req{color:var(--caramel)}
+    .note-box{background:var(--warm);border-left:3px solid var(--caramel);padding:.8rem 1rem;font-size:.83rem;color:#7A5C40;margin-bottom:1.2rem;line-height:1.55}
+    #success-screen{display:none;text-align:center;padding:1.5rem 0}
+    .suc-icon{font-size:4.5rem;display:block;margin-bottom:1.2rem}
+    .suc-title{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--choco);margin-bottom:.9rem}
+    .suc-msg{color:#7A5C40;line-height:1.7;margin-bottom:1.8rem;font-size:.93rem}
+    .suc-detail{background:var(--warm);padding:1.1rem 1.4rem;text-align:left;margin-bottom:1.8rem;font-size:.86rem}
+    .suc-detail p{color:var(--choco);padding:.18rem 0}
+    .modal-foot{padding:1.3rem 2.2rem;border-top:1px solid rgba(200,136,58,.15);display:flex;gap:1rem;background:var(--cream);flex-shrink:0;position:sticky;bottom:0}
+
+    /* REVIEWS */
+    .reviews{background:var(--choco);text-align:center}
+    .reviews .sec-title{color:var(--warm)}
+    .r-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem;margin-top:2rem;text-align:left}
+    .r-card{background:rgba(255,255,255,.05);border:1px solid rgba(200,136,58,.2);padding:1.8rem;animation:fadeUp .4s ease both;transition:border-color .3s}
+    .r-card:hover{border-color:var(--caramel)}
+    .r-stars{color:var(--caramel);font-size:1.05rem;margin-bottom:.7rem}
+    .r-text{font-style:italic;color:#C8A07A;line-height:1.7;margin-bottom:.9rem}
+    .r-author{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--caramel)}
+    .r-date{font-size:.68rem;color:#6A4030;margin-top:.3rem}
+    .no-r{color:#6A4030;font-style:italic;grid-column:1/-1;text-align:center;padding:2rem 0}
+    .rf-wrap{margin-top:3rem;background:rgba(255,255,255,.04);border:1px solid rgba(200,136,58,.25);padding:2.2rem;max-width:560px;margin-left:auto;margin-right:auto;text-align:left}
+    .rf-title{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--warm);margin-bottom:.35rem}
+    .rf-sub{font-size:.83rem;color:#A07850;margin-bottom:1.6rem}
+    .rf label{display:block;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--caramel);font-weight:700;margin-bottom:.38rem;margin-top:1rem}
+    .rf input,.rf textarea{width:100%;padding:.72rem .95rem;border:1px solid rgba(200,136,58,.3);background:rgba(255,255,255,.07);font-family:'Lato',sans-serif;font-size:.88rem;color:var(--warm);outline:none;transition:border-color .2s}
+    .rf input::placeholder,.rf textarea::placeholder{color:#6A4030}
+    .rf input:focus,.rf textarea:focus{border-color:var(--caramel);background:rgba(255,255,255,.12)}
+    .rf textarea{resize:vertical;min-height:85px}
+    .sp{display:flex;gap:.45rem;margin-top:.45rem}
+    .sp span{font-size:2rem;cursor:pointer;color:#4A2810;transition:color .15s,transform .15s}
+    .sp span.lit{color:var(--caramel)}
+    .sp span:hover{transform:scale(1.18)}
+    .rf-btn{margin-top:1.4rem;width:100%}
+    .rf-used{background:rgba(200,136,58,.12);border:1px solid rgba(200,136,58,.3);padding:1.2rem 1.5rem;color:#A07850;font-size:.86rem;text-align:center;font-style:italic;border-radius:0}
+
+    /* CTA */
+    .cta-sec{background:var(--caramel);text-align:center;padding:6rem}
+    .cta-sec .sec-title{color:#fff}
+    .cta-sec p{color:rgba(255,255,255,.88);max-width:500px;margin:0 auto 2.8rem;line-height:1.7}
+    .btn-white{display:inline-block;padding:.95rem 2.6rem;background:#fff;color:var(--caramel);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;transition:all .2s}
+    .btn-white:hover{background:var(--choco);color:#fff;transform:translateY(-2px)}
+
+    /* SHIPPING MODAL */
+    .sr{display:flex;gap:1rem;padding:.85rem 0;border-bottom:1px solid rgba(200,136,58,.15)}
+    .si{font-size:1.15rem;flex-shrink:0}
+    .sr p{font-size:.86rem;color:#7A5C40;line-height:1.5}
+    .sr strong{display:block;color:var(--choco);margin-bottom:.18rem;font-size:.8rem}
+
+    /* FOOTER */
+    footer{background:var(--deep);color:#A07850;padding:4rem 6rem;display:grid;grid-template-columns:2fr 1fr 1fr;gap:4rem}
+    .f-logo{font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--cream);margin-bottom:.9rem}
+    .f-logo span{color:var(--caramel);font-style:italic}
+    footer p{font-size:.86rem;line-height:1.7;margin-bottom:.9rem}
+    footer h4{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--caramel);margin-bottom:1.4rem}
+    footer ul{list-style:none}
+    footer ul li{margin-bottom:.65rem;font-size:.86rem}
+    footer ul a{color:#A07850;text-decoration:none;cursor:pointer;transition:color .2s}
+    footer ul a:hover{color:var(--caramel)}
+    .f-bottom{background:var(--deep);padding:1.4rem 6rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(160,120,80,.2);font-size:.76rem;color:#5A3020}
+    .author-tag{background:rgba(200,136,58,.15);border:1px solid rgba(200,136,58,.3);padding:.38rem .9rem;color:var(--caramel);font-size:.7rem;letter-spacing:.1em}
+
+    /* CONTACT */
+    .contact-sec{background:var(--warm);text-align:center;padding:5rem 6rem;border-top:3px solid rgba(200,136,58,.2)}
+    .contact-sec .sec-title{margin-bottom:.8rem}
+    .contact-sec p{color:#7A5C40;max-width:500px;margin:0 auto 2.2rem;line-height:1.7;font-size:.96rem}
+    .contact-card{display:inline-flex;align-items:center;gap:1.4rem;background:var(--choco);color:var(--cream);padding:1.4rem 2.6rem;box-shadow:6px 6px 0 var(--caramel);transition:transform .2s,box-shadow .2s}
+    .contact-card:hover{transform:translateY(-3px);box-shadow:8px 8px 0 var(--caramel)}
+    .contact-icon{font-size:2rem;line-height:1}
+    .contact-info{text-align:left}
+    .contact-label{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--caramel);font-weight:700;display:block;margin-bottom:.25rem}
+    .contact-number{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--warm);letter-spacing:.04em}
+    .contact-sub{font-size:.75rem;color:#A07850;margin-top:.22rem;display:block}
+    .contact-wa{display:inline-block;margin-top:1.8rem;padding:.75rem 2rem;background:#25D366;color:#fff;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;text-decoration:none;transition:background .2s,transform .2s}
+    .contact-wa:hover{background:#128C7E;transform:translateY(-2px)}
+
+    /* ANIMATIONS */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes scaleIn{from{opacity:0;transform:scale(1.05)}to{opacity:1;transform:scale(1)}}
+    @keyframes slideRight{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:translateX(0)}}
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+
+    @media(max-width:1100px){.grid-4{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:900px){
+      nav{padding:1rem 1.5rem} nav ul{gap:1rem;font-size:.72rem}
+      .hero{grid-template-columns:1fr} .hero-visual{height:290px} .hero-text{padding:2.5rem 2rem 2rem}
+      section{padding:4rem 2rem}
+      .about{grid-template-columns:1fr;padding:4rem 2rem;gap:2rem}
+      .grid-3,.grid-2,.grid-4{grid-template-columns:1fr}
+      .r-grid{grid-template-columns:1fr}
+      footer{grid-template-columns:1fr;padding:3rem 2rem}
+      .f-bottom{flex-direction:column;gap:.9rem;text-align:center;padding:1.3rem 2rem}
+      #cart-panel{width:100%}
+      .frow{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Dulce <span>Tentación</span></div>
+  <ul>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#resenas">Reseñas</a></li>
+    <li><a href="#pedido">Pedir</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<section class="hero" style="padding:0">
+  <div class="hero-text">
+    <p class="eyebrow">✦ Postres Artesanales · Pasto, Colombia</p>
+    <h1 class="hero-title">El placer<br/>de lo <em>dulce</em><br/>hecho a mano.</h1>
+    <p class="hero-sub">Creamos postres con ingredientes frescos y de calidad, con técnicas de pastelería y mucho amor. Cada bocado cuenta una historia.</p>
+    <div>
+      <a href="#menu" class="btn-main">Ver Menú</a>
+      <a href="#pedido" class="btn-ghost">Hacer Pedido</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img-wrap">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=85&auto=format&fit=crop" alt="Postres artesanales" onerror="this.style.display='none';document.querySelector('.hero-fallback').style.display='flex'"/>
+      <div class="hero-fallback">
+        <div class="big">🎂</div>
+        <div class="subs">🍰 🧁 🍫</div>
+      </div>
+    </div>
+    <div class="hero-badge">Postres frescos<br/><strong>100%</strong><span style="font-size:.78rem;color:#C8A07A">hechos a mano</span></div>
+  </div>
+</section>
+
+<div class="about" id="nosotros">
+  <div class="reveal">
+    <p class="eyebrow">¿Quiénes somos?</p>
+    <h2 class="sec-title">Pasión por la <em>pastelería</em> artesanal</h2>
+    <p>Somos un emprendimiento dedicado a crear postres únicos con ingredientes frescos y de calidad. Cada receta está pensada para ofrecer sabores auténticos y memorables.</p>
+    <p style="margin-top:.9rem">Cada pedido se prepara fresco, sin conservantes ni colorantes artificiales.</p>
+  </div>
+  <div class="stats reveal">
+    <div class="stat"><span class="stat-num">20+</span><span class="stat-lbl">Sabores únicos</span></div>
+    <div class="stat"><span class="stat-num">100%</span><span class="stat-lbl">Hecho a mano</span></div>
+    <div class="stat"><span class="stat-num">48h</span><span class="stat-lbl">Anticipación mínima</span></div>
+    <div class="stat"><span class="stat-num">4.9★</span><span class="stat-lbl">Calificación</span></div>
+  </div>
+</div>
+
+<section class="menu" id="menu">
+  <div class="menu-header reveal">
+    <p class="eyebrow">Nuestro Menú</p>
+    <h2 class="sec-title">Postres que <em>enamoran</em></h2>
+  </div>
+
+  <!-- TORTAS -->
+  <div class="menu-sec reveal">
+    <div class="sec-bar"><span class="sec-bar-emoji">🎂</span><h3>Tortas</h3><span class="sec-bar-tag">4 opciones</span></div>
+    <div class="grid-4">
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&q=80&auto=format&fit=crop" alt="Torta Chocolate"/><div class="card-fb g-choc"><span>🍫</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Torta de Chocolate</div><p class="card-desc">Húmeda e intensa. Ganache premium y flor de sal.</p><div class="card-foot"><span class="card-price">$35.000</span><button class="card-btn" onclick="addCart('Torta de Chocolate',35000)">+ Agregar</button></div></div></div>
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1557925923-cd4648e211a0?w=500&q=80&auto=format&fit=crop" alt="Torta Vainilla"/><div class="card-fb g-vanilla"><span>🎂</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Torta de Vainilla y Fresas</div><p class="card-desc">Bizcocho esponjoso, crema de vainilla y fresas frescas por capas.</p><div class="card-foot"><span class="card-price">$32.000</span><button class="card-btn" onclick="addCart('Torta Vainilla y Fresas',32000)">+ Agregar</button></div></div></div>
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500&q=80&auto=format&fit=crop" alt="Tres Leches"/><div class="card-fb g-caramel"><span>🍰</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Tres Leches con Durazno</div><p class="card-desc">Empapada en tres leches, chantilly y durazno fresco.</p><div class="card-foot"><span class="card-price">$30.000</span><button class="card-btn" onclick="addCart('Tarta Tres Leches',30000)">+ Agregar</button></div></div></div>
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=500&q=80&auto=format&fit=crop" alt="Red Velvet"/><div class="card-fb g-red"><span>❤️</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Red Velvet</div><p class="card-desc">Terciopelo rojo con frosting de queso crema. Irresistible.</p><div class="card-foot"><span class="card-price">$36.000</span><button class="card-btn" onclick="addCart('Torta Red Velvet',36000)">+ Agregar</button></div></div></div>
+    </div>
+  </div>
+
+  <!-- CHEESECAKES -->
+  <div class="menu-sec reveal">
+    <div class="sec-bar"><span class="sec-bar-emoji">🍮</span><h3>Cheesecakes</h3><span class="sec-bar-tag">3 opciones</span></div>
+    <div class="grid-3">
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=500&q=80&auto=format&fit=crop" alt="Cheesecake Maracuyá"/><div class="card-fb g-citrus"><span>🍋</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Cheesecake de Maracuyá</div><p class="card-desc">Base de galleta mantequilla, crema de queso y coulis de maracuyá.</p><div class="card-foot"><span class="card-price">$28.000</span><button class="card-btn" onclick="addCart('Cheesecake Maracuyá',28000)">+ Agregar</button></div></div></div>
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=500&q=80&auto=format&fit=crop" alt="Cheesecake Frutos Rojos"/><div class="card-fb g-berry"><span>🍓</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Cheesecake Frutos Rojos</div><p class="card-desc">Cremoso y fresco con compota de mora, fresa y frambuesa.</p><div class="card-foot"><span class="card-price">$28.000</span><button class="card-btn" onclick="addCart('Cheesecake Frutos Rojos',28000)">+ Agregar</button></div></div></div>
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1567171466295-4afa63d45416?w=500&q=80&auto=format&fit=crop" alt="Cheesecake NY"/><div class="card-fb g-vanilla"><span>🧀</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Cheesecake New York</div><p class="card-desc">El clásico cremoso con base de galleta y caramelo de vainilla.</p><div class="card-foot"><span class="card-price">$26.000</span><button class="card-btn" onclick="addCart('Cheesecake New York',26000)">+ Agregar</button></div></div></div>
+    </div>
+  </div>
+
+  <!-- BROWNIES & GALLETAS -->
+  <div class="menu-sec reveal">
+    <div class="sec-bar"><span class="sec-bar-emoji">🍪</span><h3>Brownies & Galletas</h3><span class="sec-bar-tag">4 opciones</span></div>
+    <div class="grid-4">
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=500&q=80&auto=format&fit=crop" alt="Brownies"/><div class="card-fb g-dark"><span>🍩</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Brownies Fudge con Nuez</div><p class="card-desc">Chocolate 70%, nueces tostadas y toque de vainilla.</p><div class="card-foot"><span class="card-price">$12.000</span><button class="card-btn" onclick="addCart('Brownies Fudge',12000)">+ Agregar</button></div></div></div>
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&q=80&auto=format&fit=crop" alt="Galletas chispas"/><div class="card-fb g-caramel"><span>🍪</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Galletas de Chispas</div><p class="card-desc">Crujientes por fuera, suaves por dentro. Chispas de chocolate premium.</p><div class="card-foot"><span class="card-price">$7.000</span><button class="card-btn" onclick="addCart('Galletas de Chispas',7000)">+ Agregar</button></div></div></div>
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=500&q=80&auto=format&fit=crop" alt="Galletas avena"/><div class="card-fb g-caramel"><span>🌾</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Galletas Avena y Arequipe</div><p class="card-desc">Avena entera y arequipe artesanal en el centro.</p><div class="card-foot"><span class="card-price">$8.000</span><button class="card-btn" onclick="addCart('Galletas Avena Arequipe',8000)">+ Agregar</button></div></div></div>
+      <div class="card"><div class="card-img"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgdmlld0JveD0iMCAwIDY4MCA0MDAiIHJvbGU9ImltZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+QmxvbmRpZXMgZGUgQ2FyYW1lbG88L3RpdGxlPjxkZXNjPklsdXN0cmFjacOzbiBkZSBibG9uZGllcyBkb3JhZG9zIGNvbiBjYXJhbWVsbyB5IHBlY2FuYXM8L2Rlc2M+PHJlY3Qgd2lkdGg9IjY4MCIgaGVpZ2h0PSI0MDAiIGZpbGw9IiNDODg4M0EiLz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iNjgwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI0U4QTg0QSIgb3BhY2l0eT0iMC4zIi8+PHJlY3QgeD0iMzAiIHk9IjMwIiB3aWR0aD0iNjIwIiBoZWlnaHQ9IjM0MCIgcng9IjgiIGZpbGw9IiNENDg5NEEiLz48cmVjdCB4PSIzMCIgeT0iMzAiIHdpZHRoPSI2MjAiIGhlaWdodD0iMzQwIiByeD0iOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQjA2ODI4IiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuNCIvPjxyZWN0IHg9IjgwIiB5PSI5MCIgd2lkdGg9IjUyMCIgaGVpZ2h0PSIyNDAiIHJ4PSI2IiBmaWxsPSIjN0E0MDEwIiBvcGFjaXR5PSIwLjM1Ii8+PHJlY3QgeD0iNzYiIHk9Ijg2IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjI0MCIgcng9IjYiIGZpbGw9IiM4QjVFMkEiLz48cmVjdCB4PSI3NiIgeT0iODYiIHdpZHRoPSI1MjAiIGhlaWdodD0iMjQwIiByeD0iNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNkE0MDEwIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI5NiIgeT0iMTAwIiB3aWR0aD0iMTU4IiBoZWlnaHQ9IjEwMCIgcng9IjMiIGZpbGw9IiNFOEMwNjAiLz48cmVjdCB4PSI5NiIgeT0iMTAwIiB3aWR0aD0iMTU4IiBoZWlnaHQ9IjEwMCIgcng9IjMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0M4ODgzQSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48cmVjdCB4PSI5NiIgeT0iMTAwIiB3aWR0aD0iMTU4IiBoZWlnaHQ9IjEyIiByeD0iMiIgZmlsbD0iI0Y1RDA3MCIgb3BhY2l0eT0iMC43Ii8+PHBhdGggZD0iTSAxMzAgMTEwIFEgMTQ1IDEyNSAxMzggMTQ1IFEgMTUwIDE2MCAxNjAgMTg1IiBmaWxsPSJub25lIiBzdHJva2U9IiNDODg4M0EiIHN0cm9rZS13aWR0aD0iMS41IiBvcGFjaXR5PSIwLjUiLz48cGF0aCBkPSJNIDIwMCAxMTUgUSAxODUgMTMwIDE5MiAxNTUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0IwNjgyOCIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjQiLz48ZWxsaXBzZSBjeD0iMTE1IiBjeT0iMTM1IiByeD0iOSIgcnk9IjciIGZpbGw9IiM3QTQwMTAiLz48ZWxsaXBzZSBjeD0iMTE1IiBjeT0iMTM1IiByeD0iNiIgcnk9IjQiIGZpbGw9IiNBMDU4MjgiLz48ZWxsaXBzZSBjeD0iMTc1IiBjeT0iMTI1IiByeD0iOCIgcnk9IjYiIGZpbGw9IiM3QTQwMTAiLz48ZWxsaXBzZSBjeD0iMTc1IiBjeT0iMTI1IiByeD0iNSIgcnk9IjMuNSIgZmlsbD0iI0EwNTgyOCIvPjxlbGxpcHNlIGN4PSIxNDAiIGN5PSIxNzAiIHJ4PSI5IiByeT0iNiIgZmlsbD0iIzdBNDAxMCIvPjxlbGxpcHNlIGN4PSIxNDAiIGN5PSIxNzAiIHJ4PSI2IiByeT0iNCIgZmlsbD0iI0EwNTgyOCIvPjxlbGxpcHNlIGN4PSIyMTgiIGN5PSIxNTUiIHJ4PSI3IiByeT0iNSIgZmlsbD0iIzdBNDAxMCIvPjxlbGxpcHNlIGN4PSIyMTgiIGN5PSIxNTUiIHJ4PSI0LjUiIHJ5PSIzIiBmaWxsPSIjQTA1ODI4Ii8+PHBhdGggZD0iTSAxMDAgMTA4IFEgMTQwIDExNSAxODAgMTA4IFEgMjEwIDExMiAyNDggMTA2IiBmaWxsPSJub25lIiBzdHJva2U9IiNGNUQwNDAiIHN0cm9rZS13aWR0aD0iMi41IiBvcGFjaXR5PSIwLjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0gMTEwIDEyMCBRIDE1MCAxMjggMjAwIDExOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRUNDMDQwIiBzdHJva2Utd2lkdGg9IjEuNSIgb3BhY2l0eT0iMC41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cmVjdCB4PSIyNjIiIHk9IjEwMCIgd2lkdGg9IjE1OCIgaGVpZ2h0PSIxMDAiIHJ4PSIzIiBmaWxsPSIjRERCODU4Ii8+PHJlY3QgeD0iMjYyIiB5PSIxMDAiIHdpZHRoPSIxNTgiIGhlaWdodD0iMTAwIiByeD0iMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQzg4ODNBIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxyZWN0IHg9IjI2MiIgeT0iMTAwIiB3aWR0aD0iMTU4IiBoZWlnaHQ9IjEwIiByeD0iMiIgZmlsbD0iI0VDQzg2OCIgb3BhY2l0eT0iMC43Ii8+PHBhdGggZD0iTSAzMDAgMTEyIFEgMjkwIDEzNSAzMDggMTU4IFEgMjk1IDE3NSAzMTAgMTkyIiBmaWxsPSJub25lIiBzdHJva2U9IiNDODg4M0EiIHN0cm9rZS13aWR0aD0iMS41IiBvcGFjaXR5PSIwLjQ1Ii8+PGVsbGlwc2UgY3g9IjI4NSIgY3k9IjEzMiIgcng9IjkiIHJ5PSI2IiBmaWxsPSIjN0E0MDEwIi8+PGVsbGlwc2UgY3g9IjI4NSIgY3k9IjEzMiIgcng9IjYiIHJ5PSI0IiBmaWxsPSIjQTA1ODI4Ii8+PGVsbGlwc2UgY3g9IjM0NSIgY3k9IjEyMCIgcng9IjgiIHJ5PSI2IiBmaWxsPSIjN0E0MDEwIi8+PGVsbGlwc2UgY3g9IjM0NSIgY3k9IjEyMCIgcng9IjUiIHJ5PSIzLjUiIGZpbGw9IiNBMDU4MjgiLz48ZWxsaXBzZSBjeD0iMzg1IiBjeT0iMTU1IiByeD0iOSIgcnk9IjYiIGZpbGw9IiM3QTQwMTAiLz48ZWxsaXBzZSBjeD0iMzg1IiBjeT0iMTU1IiByeD0iNiIgcnk9IjQiIGZpbGw9IiNBMDU4MjgiLz48ZWxsaXBzZSBjeD0iMzEwIiBjeT0iMTcwIiByeD0iNyIgcnk9IjUiIGZpbGw9IiM3QTQwMTAiLz48ZWxsaXBzZSBjeD0iMzEwIiBjeT0iMTcwIiByeD0iNC41IiByeT0iMyIgZmlsbD0iI0EwNTgyOCIvPjxwYXRoIGQ9Ik0gMjY4IDEwNiBRIDMxMCAxMTQgMzYwIDEwNyBRIDM5NSAxMTIgNDE1IDEwNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjVEMDQwIiBzdHJva2Utd2lkdGg9IjIuNSIgb3BhY2l0eT0iMC42NSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHJlY3QgeD0iNDI4IiB5PSIxMDAiIHdpZHRoPSIxNTgiIGhlaWdodD0iMTAwIiByeD0iMyIgZmlsbD0iI0VDQzA1MCIvPjxyZWN0IHg9IjQyOCIgeT0iMTAwIiB3aWR0aD0iMTU4IiBoZWlnaHQ9IjEwMCIgcng9IjMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0M4ODgzQSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48cmVjdCB4PSI0MjgiIHk9IjEwMCIgd2lkdGg9IjE1OCIgaGVpZ2h0PSIxMSIgcng9IjIiIGZpbGw9IiNGOEQ4NjgiIG9wYWNpdHk9IjAuNyIvPjxwYXRoIGQ9Ik0gNDcwIDExMiBRIDQ4NSAxMzAgNDc1IDE1NSBRIDQ5MCAxNzAgNDgwIDE5MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQzg4ODNBIiBzdHJva2Utd2lkdGg9IjEuNSIgb3BhY2l0eT0iMC40Ii8+PGVsbGlwc2UgY3g9IjQ0OCIgY3k9IjEzMCIgcng9IjkiIHJ5PSI2IiBmaWxsPSIjN0E0MDEwIi8+PGVsbGlwc2UgY3g9IjQ0OCIgY3k9IjEzMCIgcng9IjYiIHJ5PSI0IiBmaWxsPSIjQTA1ODI4Ii8+PGVsbGlwc2UgY3g9IjUxMCIgY3k9IjExOCIgcng9IjgiIHJ5PSI2IiBmaWxsPSIjN0E0MDEwIi8+PGVsbGlwc2UgY3g9IjUxMCIgY3k9IjExOCIgcng9IjUiIHJ5PSIzLjUiIGZpbGw9IiNBMDU4MjgiLz48ZWxsaXBzZSBjeD0iNTU1IiBjeT0iMTU4IiByeD0iOSIgcnk9IjYiIGZpbGw9IiM3QTQwMTAiLz48ZWxsaXBzZSBjeD0iNTU1IiBjeT0iMTU4IiByeD0iNiIgcnk9IjQiIGZpbGw9IiNBMDU4MjgiLz48ZWxsaXBzZSBjeD0iNDcwIiBjeT0iMTcyIiByeD0iNyIgcnk9IjUiIGZpbGw9IiM3QTQwMTAiLz48ZWxsaXBzZSBjeD0iNDcwIiBjeT0iMTcyIiByeD0iNC41IiByeT0iMyIgZmlsbD0iI0EwNTgyOCIvPjxwYXRoIGQ9Ik0gNDMyIDEwNiBRIDQ3NSAxMTUgNTI1IDEwNyBRIDU1NiAxMTIgNTgwIDEwNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjVEMDQwIiBzdHJva2Utd2lkdGg9IjIuNSIgb3BhY2l0eT0iMC42NSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHJlY3QgeD0iOTYiIHk9IjIwOCIgd2lkdGg9IjE1OCIgaGVpZ2h0PSIxMDAiIHJ4PSIzIiBmaWxsPSIjRThCQzU4Ii8+PHJlY3QgeD0iOTYiIHk9IjIwOCIgd2lkdGg9IjE1OCIgaGVpZ2h0PSIxMDAiIHJ4PSIzIiBmaWxsPSJub25lIiBzdHJva2U9IiNDODg4M0EiIHN0cm9rZS13aWR0aD0iMS41Ii8+PHJlY3QgeD0iOTYiIHk9IjIwOCIgd2lkdGg9IjE1OCIgaGVpZ2h0PSIxMSIgcng9IjIiIGZpbGw9IiNGNUNDNjgiIG9wYWNpdHk9IjAuNyIvPjxlbGxpcHNlIGN4PSIxMjAiIGN5PSIyMzgiIHJ4PSI5IiByeT0iNiIgZmlsbD0iIzdBNDAxMCIvPjxlbGxpcHNlIGN4PSIxMjAiIGN5PSIyMzgiIHJ4PSI2IiByeT0iNCIgZmlsbD0iI0EwNTgyOCIvPjxlbGxpcHNlIGN4PSIxOTUiIGN5PSIyMjgiIHJ4PSI4IiByeT0iNiIgZmlsbD0iIzdBNDAxMCIvPjxlbGxpcHNlIGN4PSIxOTUiIGN5PSIyMjgiIHJ4PSI1IiByeT0iMy41IiBmaWxsPSIjQTA1ODI4Ii8+PGVsbGlwc2UgY3g9IjE1MCIgY3k9IjI4MCIgcng9IjkiIHJ5PSI2IiBmaWxsPSIjN0E0MDEwIi8+PGVsbGlwc2UgY3g9IjE1MCIgY3k9IjI4MCIgcng9IjYiIHJ5PSI0IiBmaWxsPSIjQTA1ODI4Ii8+PHBhdGggZD0iTSAxMDAgMjE1IFEgMTQ1IDIyMiAxOTAgMjE1IFEgMjI1IDIxOSAyNTAgMjE0IiBmaWxsPSJub25lIiBzdHJva2U9IiNGNUQwNDAiIHN0cm9rZS13aWR0aD0iMi41IiBvcGFjaXR5PSIwLjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxyZWN0IHg9IjI2MiIgeT0iMjAwIiB3aWR0aD0iMTU4IiBoZWlnaHQ9IjEwOCIgcng9IjMiIGZpbGw9IiNGMEM4NTAiLz48cmVjdCB4PSIyNjIiIHk9IjIwMCIgd2lkdGg9IjE1OCIgaGVpZ2h0PSIxMDgiIHJ4PSIzIiBmaWxsPSJub25lIiBzdHJva2U9IiNDODg4M0EiIHN0cm9rZS13aWR0aD0iMS41Ii8+PHJlY3QgeD0iMjYyIiB5PSIyMDAiIHdpZHRoPSIxNTgiIGhlaWdodD0iMTMiIHJ4PSIyIiBmaWxsPSIjRkFEODYwIiBvcGFjaXR5PSIwLjgiLz48cGF0aCBkPSJNIDMxMCAyMTQgUSAyOTUgMjM1IDMxNSAyNTggUSAzMDAgMjc1IDMxOCAzMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0M4ODgzQSIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9IjAuNCIvPjxlbGxpcHNlIGN4PSIyODIiIGN5PSIyMzIiIHJ4PSI5IiByeT0iNiIgZmlsbD0iIzdBNDAxMCIvPjxlbGxpcHNlIGN4PSIyODIiIGN5PSIyMzIiIHJ4PSI2IiByeT0iNCIgZmlsbD0iI0EwNTgyOCIvPjxlbGxpcHNlIGN4PSIzODAiIGN5PSIyNDIiIHJ4PSI4IiByeT0iNiIgZmlsbD0iIzdBNDAxMCIvPjxlbGxpcHNlIGN4PSIzODAiIGN5PSIyNDIiIHJ4PSI1IiByeT0iMy41IiBmaWxsPSIjQTA1ODI4Ii8+PGVsbGlwc2UgY3g9IjM0MCIgY3k9IjI4MiIgcng9IjkiIHJ5PSI2IiBmaWxsPSIjN0E0MDEwIi8+PGVsbGlwc2UgY3g9IjM0MCIgY3k9IjI4MiIgcng9IjYiIHJ5PSI0IiBmaWxsPSIjQTA1ODI4Ii8+PHJlY3QgeD0iMjkwIiB5PSIyMTgiIHdpZHRoPSI1IiBoZWlnaHQ9IjMiIHJ4PSIxIiBmaWxsPSIjQzg4ODNBIiBvcGFjaXR5PSIwLjgiLz48cmVjdCB4PSIzMzAiIHk9IjIxMiIgd2lkdGg9IjQiIGhlaWdodD0iMyIgcng9IjEiIGZpbGw9IiNDODg4M0EiIG9wYWNpdHk9IjAuNyIvPjxyZWN0IHg9IjM3MCIgeT0iMjIwIiB3aWR0aD0iNSIgaGVpZ2h0PSIyIiByeD0iMSIgZmlsbD0iI0M4ODgzQSIgb3BhY2l0eT0iMC44Ii8+PHBhdGggZD0iTSAyNjcgMjA3IFEgMzEwIDIxNiAzNjAgMjA4IFEgMzk1IDIxMyA0MTUgMjA2IiBmaWxsPSJub25lIiBzdHJva2U9IiNGOEQ4NDAiIHN0cm9rZS13aWR0aD0iMyIgb3BhY2l0eT0iMC43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cmVjdCB4PSI0MjgiIHk9IjIwOCIgd2lkdGg9IjE1OCIgaGVpZ2h0PSIxMDAiIHJ4PSIzIiBmaWxsPSIjRTRCODUwIi8+PHJlY3QgeD0iNDI4IiB5PSIyMDgiIHdpZHRoPSIxNTgiIGhlaWdodD0iMTAwIiByeD0iMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQzg4ODNBIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxyZWN0IHg9IjQyOCIgeT0iMjA4IiB3aWR0aD0iMTU4IiBoZWlnaHQ9IjExIiByeD0iMiIgZmlsbD0iI0YyQzg2MCIgb3BhY2l0eT0iMC43Ii8+PGVsbGlwc2UgY3g9IjQ1MiIgY3k9IjIzNiIgcng9IjkiIHJ5PSI2IiBmaWxsPSIjN0E0MDEwIi8+PGVsbGlwc2UgY3g9IjQ1MiIgY3k9IjIzNiIgcng9IjYiIHJ5PSI0IiBmaWxsPSIjQTA1ODI4Ii8+PGVsbGlwc2UgY3g9IjUzMCIgY3k9IjIyNSIgcng9IjgiIHJ5PSI2IiBmaWxsPSIjN0E0MDEwIi8+PGVsbGlwc2UgY3g9IjUzMCIgY3k9IjIyNSIgcng9IjUiIHJ5PSIzLjUiIGZpbGw9IiNBMDU4MjgiLz48ZWxsaXBzZSBjeD0iNTY1IiBjeT0iMjcyIiByeD0iOSIgcnk9IjYiIGZpbGw9IiM3QTQwMTAiLz48ZWxsaXBzZSBjeD0iNTY1IiBjeT0iMjcyIiByeD0iNiIgcnk9IjQiIGZpbGw9IiNBMDU4MjgiLz48ZWxsaXBzZSBjeD0iNDg4IiBjeT0iMjc4IiByeD0iNyIgcnk9IjUiIGZpbGw9IiM3QTQwMTAiLz48ZWxsaXBzZSBjeD0iNDg4IiBjeT0iMjc4IiByeD0iNC41IiByeT0iMyIgZmlsbD0iI0EwNTgyOCIvPjxwYXRoIGQ9Ik0gNDMyIDIxNSBRIDQ3NSAyMjIgNTI1IDIxNSBRIDU1OCAyMjAgNTgyIDIxMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjVEMDQwIiBzdHJva2Utd2lkdGg9IjIuNSIgb3BhY2l0eT0iMC42MiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGVsbGlwc2UgY3g9IjE3NSIgY3k9IjE0OCIgcng9IjIwIiByeT0iOCIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMTgiLz48ZWxsaXBzZSBjeD0iMzQwIiBjeT0iMTM4IiByeD0iMTgiIHJ5PSI3IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4xNCIvPjxlbGxpcHNlIGN4PSI1MDAiIGN5PSIxNDUiIHJ4PSIyMiIgcnk9IjgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjE2Ii8+PGVsbGlwc2UgY3g9IjI1MCIgY3k9IjI2MiIgcng9IjE2IiByeT0iNiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMTUiLz48ZWxsaXBzZSBjeD0iNTAwIiBjeT0iMjU4IiByeD0iMTkiIHJ5PSI3IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4xMyIvPjwvc3ZnPg==" alt="Blondies de Caramelo"/><div class="card-fb g-vanilla"><span>🍯</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Blondies de Caramelo</div><p class="card-desc">La versión dorada del brownie. Mantequilla, azúcar morena y pecanas.</p><div class="card-foot"><span class="card-price">$11.000</span><button class="card-btn" onclick="addCart('Blondies de Caramelo',11000)">+ Agregar</button></div></div></div>
+    </div>
+  </div>
+
+  <!-- POSTRES FRÍOS -->
+  <div class="menu-sec reveal">
+    <div class="sec-bar"><span class="sec-bar-emoji">❄️</span><h3>Postres Fríos</h3><span class="sec-bar-tag">3 opciones</span></div>
+    <div class="grid-3">
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=500&q=80&auto=format&fit=crop" alt="Panna Cotta"/><div class="card-fb g-vanilla"><span>🍮</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Panna Cotta de Vainilla</div><p class="card-desc">Delicada y cremosa con compota de frutos rojos y menta fresca.</p><div class="card-foot"><span class="card-price">$15.000</span><button class="card-btn" onclick="addCart('Panna Cotta',15000)">+ Agregar</button></div></div></div>
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?w=500&q=80&auto=format&fit=crop" alt="Crème Brûlée"/><div class="card-fb g-caramel"><span>☕</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Crème Brûlée al Café</div><p class="card-desc">Capa de caramelo crocante. Infusionada con café molido premium.</p><div class="card-foot"><span class="card-price">$16.000</span><button class="card-btn" onclick="addCart('Crème Brûlée',16000)">+ Agregar</button></div></div></div>
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500&q=80&auto=format&fit=crop" alt="Mousse"/><div class="card-fb g-choc"><span>🍫</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Mousse de Chocolate Oscuro</div><p class="card-desc">Ligero y aireado. Chocolate 65% con toque de naranja y canela.</p><div class="card-foot"><span class="card-price">$14.000</span><button class="card-btn" onclick="addCart('Mousse de Chocolate',14000)">+ Agregar</button></div></div></div>
+    </div>
+  </div>
+
+  <!-- PETIT FOURS & CUPCAKES -->
+  <div class="menu-sec reveal">
+    <div class="sec-bar"><span class="sec-bar-emoji">🧁</span><h3>Petit Fours & Cupcakes</h3><span class="sec-bar-tag">4 opciones</span></div>
+    <div class="grid-4">
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1612203985729-70726954388c?w=500&q=80&auto=format&fit=crop" alt="Macarons"/><div class="card-fb g-berry"><span>🫐</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Macarons Mora & Arequipe</div><p class="card-desc">Crocantes por fuera, suaves por dentro.</p><div class="card-foot"><span class="card-price">$18.000</span><button class="card-btn" onclick="addCart('Macarons Mora Arequipe',18000)">+ Agregar</button></div></div></div>
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=500&q=80&auto=format&fit=crop" alt="Cupcakes"/><div class="card-fb g-pink"><span>🧁</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Cupcakes de Frambuesa</div><p class="card-desc">Esponjosos con buttercream de frambuesa. Decorados a mano.</p><div class="card-foot"><span class="card-price">$10.000</span><button class="card-btn" onclick="addCart('Cupcakes de Frambuesa',10000)">+ Agregar</button></div></div></div>
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=500&q=80&auto=format&fit=crop" alt="Profiteroles"/><div class="card-fb g-choc"><span>🎈</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Profiteroles al Chocolate</div><p class="card-desc">Choux rellenos de crema pastelera y bañados en chocolate.</p><div class="card-foot"><span class="card-price">$13.000</span><button class="card-btn" onclick="addCart('Profiteroles',13000)">+ Agregar</button></div></div></div>
+      <div class="card"><div class="card-img"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgdmlld0JveD0iMCAwIDY4MCA0MDAiIHJvbGU9ImltZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+VHJ1ZmFzIEFydGVzYW5hbGVzPC90aXRsZT48ZGVzYz5JbHVzdHJhY2nDs24gZGUgc2VpcyB0cnVmYXMgZGUgY2hvY29sYXRlIGFydGVzYW5hbGVzPC9kZXNjPjxyZWN0IHdpZHRoPSI2ODAiIGhlaWdodD0iNDAwIiBmaWxsPSIjMUEwQTAzIi8+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjY4MCIgaGVpZ2h0PSI0MDAiIGZpbGw9IiMyQTEwMDgiIG9wYWNpdHk9IjAuNiIvPjxwYXRoIGQ9Ik0gMCA4MCBRIDIwMCA3MCAzNTAgOTUgUSA1MDAgMTE1IDY4MCA4NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM0IxQTA4IiBzdHJva2Utd2lkdGg9IjEiIG9wYWNpdHk9IjAuNSIvPjxwYXRoIGQ9Ik0gMCAyMDAgUSAxODAgMTkwIDMyMCAyMTUgUSA0ODAgMjMwIDY4MCAyMDUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzNCMUEwOCIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjQiLz48cGF0aCBkPSJNIDAgMzIwIFEgMjIwIDMwNSA0MDAgMzI4IFEgNTUwIDM0MCA2ODAgMzE4IiBmaWxsPSJub25lIiBzdHJva2U9IiMzQjFBMDgiIHN0cm9rZS13aWR0aD0iMSIgb3BhY2l0eT0iMC4zNSIvPjxlbGxpcHNlIGN4PSIzNDAiIGN5PSIzNjAiIHJ4PSIzMDAiIHJ5PSIzMCIgZmlsbD0iIzBEMDUwMiIgb3BhY2l0eT0iMC41Ii8+PHJlY3QgeD0iNjAiIHk9IjUwIiB3aWR0aD0iNTYwIiBoZWlnaHQ9IjI5MCIgcng9IjEyIiBmaWxsPSIjMTIwNzAyIi8+PHJlY3QgeD0iNjAiIHk9IjUwIiB3aWR0aD0iNTYwIiBoZWlnaHQ9IjI5MCIgcng9IjEyIiBmaWxsPSJub25lIiBzdHJva2U9IiMzQjFGMEUiIHN0cm9rZS13aWR0aD0iMS41Ii8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTYwLDE0OCkiPjxlbGxpcHNlIGN4PSIwIiBjeT0iMTgiIHJ4PSI1MiIgcnk9IjE4IiBmaWxsPSIjMEQwNTAyIiBvcGFjaXR5PSIwLjQ1Ii8+PGNpcmNsZSBjeD0iMCIgY3k9IjAiIHI9IjUyIiBmaWxsPSIjMkEwRTA0Ii8+PGNpcmNsZSBjeD0iMCIgY3k9IjAiIHI9IjUyIiBmaWxsPSIjM0IxQTA4IiBvcGFjaXR5PSIwLjUiLz48Y2lyY2xlIGN4PSItMTgiIGN5PSItMjIiIHI9IjQiIGZpbGw9IiMxQTBBMDMiIG9wYWNpdHk9IjAuNiIvPjxjaXJjbGUgY3g9IjE1IiBjeT0iLTI4IiByPSIzIiBmaWxsPSIjMUEwQTAzIiBvcGFjaXR5PSIwLjUiLz48Y2lyY2xlIGN4PSIyOCIgY3k9IjEwIiByPSI1IiBmaWxsPSIjMUEwQTAzIiBvcGFjaXR5PSIwLjQ1Ii8+PGNpcmNsZSBjeD0iLTMwIiBjeT0iMTUiIHI9IjQiIGZpbGw9IiMxQTBBMDMiIG9wYWNpdHk9IjAuNSIvPjxjaXJjbGUgY3g9IjUiIGN5PSIzMCIgcj0iNCIgZmlsbD0iIzFBMEEwMyIgb3BhY2l0eT0iMC40Ii8+PGVsbGlwc2UgY3g9Ii0xNCIgY3k9Ii0xOCIgcng9IjE2IiByeT0iMTAiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjA3Ii8+PGVsbGlwc2UgY3g9IjAiIGN5PSItMzAiIHJ4PSIyMiIgcnk9IjgiIGZpbGw9IiM1QTI4MDgiIG9wYWNpdHk9IjAuNiIvPjxlbGxpcHNlIGN4PSIwIiBjeT0iLTMwIiByeD0iMTYiIHJ5PSI1IiBmaWxsPSIjN0EzODEwIiBvcGFjaXR5PSIwLjUiLz48cmVjdCB4PSItMjAiIHk9Ii04IiB3aWR0aD0iNDAiIGhlaWdodD0iMTYiIHJ4PSIzIiBmaWxsPSIjQzg4ODNBIiBvcGFjaXR5PSIwLjg1Ii8+PHRleHQgeD0iMCIgeT0iNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzFBMEEwMyIgZm9udC1zaXplPSIxMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiPmNhZsOpPC90ZXh0PjwvZz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNDAsMTQwKSI+PGVsbGlwc2UgY3g9IjAiIGN5PSIyMCIgcng9IjU0IiByeT0iMTgiIGZpbGw9IiMwRDA1MDIiIG9wYWNpdHk9IjAuNCIvPjxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSI1NCIgZmlsbD0iIzNCMTAwOCIvPjxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSI1NCIgZmlsbD0iIzRBMUExMCIgb3BhY2l0eT0iMC41NSIvPjxjaXJjbGUgY3g9Ii0yMCIgY3k9Ii0yMCIgcj0iNCIgZmlsbD0iIzFBMDQwMiIgb3BhY2l0eT0iMC41NSIvPjxjaXJjbGUgY3g9IjE4IiBjeT0iLTI1IiByPSI1IiBmaWxsPSIjMUEwNDAyIiBvcGFjaXR5PSIwLjUiLz48Y2lyY2xlIGN4PSIzMCIgY3k9IjEyIiByPSI0IiBmaWxsPSIjMUEwNDAyIiBvcGFjaXR5PSIwLjQiLz48Y2lyY2xlIGN4PSItMjgiIGN5PSIxOCIgcj0iNSIgZmlsbD0iIzFBMDQwMiIgb3BhY2l0eT0iMC41Ii8+PGVsbGlwc2UgY3g9Ii0xNiIgY3k9Ii0yMCIgcng9IjE4IiByeT0iMTEiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjA3Ii8+PHJlY3QgeD0iLTgiIHk9Ii00MiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjQiIHJ4PSIyIiBmaWxsPSIjRjVFOEM4IiBvcGFjaXR5PSIwLjg1Ii8+PHJlY3QgeD0iMTAiIHk9Ii0zOCIgd2lkdGg9IjEwIiBoZWlnaHQ9IjMiIHJ4PSIxLjUiIGZpbGw9IiNGNUU4QzgiIG9wYWNpdHk9IjAuNyIvPjxyZWN0IHg9Ii0xOCIgeT0iLTM2IiB3aWR0aD0iOCIgaGVpZ2h0PSIzIiByeD0iMS41IiBmaWxsPSIjRjVFOEM4IiBvcGFjaXR5PSIwLjciLz48cmVjdCB4PSItMzAiIHk9Ii04IiB3aWR0aD0iNjAiIGhlaWdodD0iMTYiIHJ4PSIzIiBmaWxsPSIjQzg4ODNBIiBvcGFjaXR5PSIwLjg1Ii8+PHRleHQgeD0iMCIgeT0iNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzFBMEEwMyIgZm9udC1zaXplPSIxMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiPmFyZXF1aXBlPC90ZXh0PjwvZz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MjAsMTQ4KSI+PGVsbGlwc2UgY3g9IjAiIGN5PSIxOCIgcng9IjUyIiByeT0iMTgiIGZpbGw9IiMwRDA1MDIiIG9wYWNpdHk9IjAuNDUiLz48Y2lyY2xlIGN4PSIwIiBjeT0iMCIgcj0iNTIiIGZpbGw9IiMxQTA4MDQiLz48Y2lyY2xlIGN4PSIwIiBjeT0iMCIgcj0iNTIiIGZpbGw9IiMyQTEyMDYiIG9wYWNpdHk9IjAuNiIvPjxjaXJjbGUgY3g9Ii0xNiIgY3k9Ii0xOCIgcj0iNCIgZmlsbD0iIzBEMDQwMiIgb3BhY2l0eT0iMC41Ii8+PGNpcmNsZSBjeD0iMjAiIGN5PSItMjIiIHI9IjMiIGZpbGw9IiMwRDA0MDIiIG9wYWNpdHk9IjAuNSIvPjxjaXJjbGUgY3g9IjI2IiBjeT0iMTQiIHI9IjUiIGZpbGw9IiMwRDA0MDIiIG9wYWNpdHk9IjAuNDUiLz48Y2lyY2xlIGN4PSItMjYiIGN5PSIxOCIgcj0iNCIgZmlsbD0iIzBEMDQwMiIgb3BhY2l0eT0iMC40Ii8+PGVsbGlwc2UgY3g9Ii0xNCIgY3k9Ii0xNiIgcng9IjE1IiByeT0iOSIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMDgiLz48ZWxsaXBzZSBjeD0iLTgiIGN5PSItMzYiIHJ4PSI5IiByeT0iNiIgZmlsbD0iIzdBNDAxMCIvPjxlbGxpcHNlIGN4PSItOCIgY3k9Ii0zNiIgcng9IjYiIHJ5PSI0IiBmaWxsPSIjQTA1ODI4Ii8+PGVsbGlwc2UgY3g9IjEwIiBjeT0iLTM4IiByeD0iNyIgcnk9IjUiIGZpbGw9IiM3QTQwMTAiLz48ZWxsaXBzZSBjeD0iMTAiIGN5PSItMzgiIHJ4PSI1IiByeT0iMyIgZmlsbD0iI0EwNTgyOCIvPjxyZWN0IHg9Ii0zNiIgeT0iLTgiIHdpZHRoPSI3MiIgaGVpZ2h0PSIxNiIgcng9IjMiIGZpbGw9IiNDODg4M0EiIG9wYWNpdHk9IjAuODUiLz48dGV4dCB4PSIwIiB5PSI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMUEwQTAzIiBmb250LXNpemU9IjkuNSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiPmZydXRvcyBzZWNvczwvdGV4dD48L2c+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTYwLDI3MCkiPjxlbGxpcHNlIGN4PSIwIiBjeT0iMTgiIHJ4PSI1MiIgcnk9IjE4IiBmaWxsPSIjMEQwNTAyIiBvcGFjaXR5PSIwLjQ1Ii8+PGNpcmNsZSBjeD0iMCIgY3k9IjAiIHI9IjUyIiBmaWxsPSIjMkUxMjA2Ii8+PGNpcmNsZSBjeD0iMCIgY3k9IjAiIHI9IjUyIiBmaWxsPSIjM0UxQzBBIiBvcGFjaXR5PSIwLjUiLz48Y2lyY2xlIGN4PSItMjAiIGN5PSItMTgiIHI9IjUiIGZpbGw9IiMxQTA4MDIiIG9wYWNpdHk9IjAuNSIvPjxjaXJjbGUgY3g9IjE2IiBjeT0iLTI2IiByPSIzIiBmaWxsPSIjMUEwODAyIiBvcGFjaXR5PSIwLjUiLz48Y2lyY2xlIGN4PSIyOCIgY3k9IjgiIHI9IjQiIGZpbGw9IiMxQTA4MDIiIG9wYWNpdHk9IjAuNDUiLz48Y2lyY2xlIGN4PSItMjUiIGN5PSIxNiIgcj0iNSIgZmlsbD0iIzFBMDgwMiIgb3BhY2l0eT0iMC40Ii8+PGVsbGlwc2UgY3g9Ii0xNSIgY3k9Ii0yMCIgcng9IjE2IiByeT0iMTAiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjA3Ii8+PGVsbGlwc2UgY3g9IjAiIGN5PSItMzQiIHJ4PSIyNCIgcnk9IjkiIGZpbGw9IiM0QTIwMDgiIG9wYWNpdHk9IjAuNyIvPjxlbGxpcHNlIGN4PSIwIiBjeT0iLTM0IiByeD0iMTYiIHJ5PSI2IiBmaWxsPSIjNkEzMDEwIiBvcGFjaXR5PSIwLjU1Ii8+PHJlY3QgeD0iLTI0IiB5PSItOCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjE2IiByeD0iMyIgZmlsbD0iI0M4ODgzQSIgb3BhY2l0eT0iMC44NSIvPjx0ZXh0IHg9IjAiIHk9IjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxQTBBMDMiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iNzAwIj5jYWbDqTwvdGV4dD48L2c+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzQwLDI2OCkiPjxlbGxpcHNlIGN4PSIwIiBjeT0iMjAiIHJ4PSI1NiIgcnk9IjE5IiBmaWxsPSIjMEQwNTAyIiBvcGFjaXR5PSIwLjQiLz48Y2lyY2xlIGN4PSIwIiBjeT0iMCIgcj0iNTYiIGZpbGw9IiMzQTEyMDgiLz48Y2lyY2xlIGN4PSIwIiBjeT0iMCIgcj0iNTYiIGZpbGw9IiM0RTFDMTAiIG9wYWNpdHk9IjAuNSIvPjxjaXJjbGUgY3g9Ii0yMiIgY3k9Ii0yMiIgcj0iNCIgZmlsbD0iIzFBMDYwMiIgb3BhY2l0eT0iMC41Ii8+PGNpcmNsZSBjeD0iMjAiIGN5PSItMjYiIHI9IjUiIGZpbGw9IiMxQTA2MDIiIG9wYWNpdHk9IjAuNSIvPjxjaXJjbGUgY3g9IjMyIiBjeT0iMTQiIHI9IjQiIGZpbGw9IiMxQTA2MDIiIG9wYWNpdHk9IjAuNCIvPjxjaXJjbGUgY3g9Ii0yOCIgY3k9IjIwIiByPSIzIiBmaWxsPSIjMUEwNjAyIiBvcGFjaXR5PSIwLjQiLz48ZWxsaXBzZSBjeD0iLTE2IiBjeT0iLTIwIiByeD0iMTkiIHJ5PSIxMiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMDgiLz48ZWxsaXBzZSBjeD0iMCIgY3k9Ii0zNiIgcng9IjI4IiByeT0iMTAiIGZpbGw9IiM1QTE4MDgiIG9wYWNpdHk9IjAuNyIvPjxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSI1NiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQzg4ODNBIiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuNCIvPjxyZWN0IHg9Ii0zMCIgeT0iLTgiIHdpZHRoPSI2MCIgaGVpZ2h0PSIxNiIgcng9IjMiIGZpbGw9IiNDODg4M0EiIG9wYWNpdHk9IjAuODUiLz48dGV4dCB4PSIwIiB5PSI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMUEwQTAzIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjcwMCI+YXJlcXVpcGU8L3RleHQ+PC9nPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUyMCwyNzApIj48ZWxsaXBzZSBjeD0iMCIgY3k9IjE4IiByeD0iNTIiIHJ5PSIxOCIgZmlsbD0iIzBEMDUwMiIgb3BhY2l0eT0iMC40NSIvPjxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSI1MiIgZmlsbD0iIzIyMEMwNCIvPjxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSI1MiIgZmlsbD0iIzMyMTYwOCIgb3BhY2l0eT0iMC41NSIvPjxjaXJjbGUgY3g9Ii0xOCIgY3k9Ii0yMCIgcj0iNCIgZmlsbD0iIzBEMDQwMiIgb3BhY2l0eT0iMC41Ii8+PGNpcmNsZSBjeD0iMTgiIGN5PSItMjQiIHI9IjMiIGZpbGw9IiMwRDA0MDIiIG9wYWNpdHk9IjAuNSIvPjxjaXJjbGUgY3g9IjI4IiBjeT0iMTAiIHI9IjUiIGZpbGw9IiMwRDA0MDIiIG9wYWNpdHk9IjAuNDUiLz48Y2lyY2xlIGN4PSItMjYiIGN5PSIxNCIgcj0iNCIgZmlsbD0iIzBEMDQwMiIgb3BhY2l0eT0iMC40Ii8+PGVsbGlwc2UgY3g9Ii0xNCIgY3k9Ii0xOCIgcng9IjE1IiByeT0iOSIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMDciLz48ZWxsaXBzZSBjeD0iLTUiIGN5PSItMzgiIHJ4PSIxMCIgcnk9IjQiIGZpbGw9IiNFOEM4NzgiIG9wYWNpdHk9IjAuOSIgdHJhbnNmb3JtPSJyb3RhdGUoLTE1LC01LC0zOCkiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSItNDAiIHJ4PSI5IiByeT0iMy41IiBmaWxsPSIjRERCODU4IiBvcGFjaXR5PSIwLjg1IiB0cmFuc2Zvcm09InJvdGF0ZSgyMCwxMiwtNDApIi8+PGVsbGlwc2UgY3g9Ii0xOCIgY3k9Ii0zNiIgcng9IjgiIHJ5PSIzIiBmaWxsPSIjRThDODc4IiBvcGFjaXR5PSIwLjgiIHRyYW5zZm9ybT0icm90YXRlKC0zMCwtMTgsLTM2KSIvPjxyZWN0IHg9Ii0zNiIgeT0iLTgiIHdpZHRoPSI3MiIgaGVpZ2h0PSIxNiIgcng9IjMiIGZpbGw9IiNDODg4M0EiIG9wYWNpdHk9IjAuODUiLz48dGV4dCB4PSIwIiB5PSI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMUEwQTAzIiBmb250LXNpemU9IjkuNSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiPmZydXRvcyBzZWNvczwvdGV4dD48L2c+PC9zdmc+" alt="Trufas Artesanales"/><div class="card-fb g-dark"><span>🍬</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Trufas Artesanales (x6)</div><p class="card-desc">Chocolate belga con rellenos de café, arequipe y frutos secos.</p><div class="card-foot"><span class="card-price">$20.000</span><button class="card-btn" onclick="addCart('Trufas Artesanales x6',20000)">+ Agregar</button></div></div></div>
+    </div>
+  </div>
+
+  <!-- TARTAS -->
+  <div class="menu-sec reveal">
+    <div class="sec-bar"><span class="sec-bar-emoji">🥧</span><h3>Tartas</h3><span class="sec-bar-tag">2 opciones</span></div>
+    <div class="grid-2">
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1519869325930-281384150729?w=500&q=80&auto=format&fit=crop" alt="Tarta Manzana"/><div class="card-fb g-citrus"><span>🍎</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Tarta de Manzana y Canela</div><p class="card-desc">Masa hojaldrada con manzanas caramelizadas, canela y azúcar morena.</p><div class="card-foot"><span class="card-price">$22.000</span><button class="card-btn" onclick="addCart('Tarta Manzana Canela',22000)">+ Agregar</button></div></div></div>
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=500&q=80&auto=format&fit=crop" alt="Tarta Limón"/><div class="card-fb g-citrus"><span>🍋</span><span class="deco tl">✦</span><span class="deco br">✦</span></div></div><div class="card-body"><div class="card-name">Tarta de Limón y Merengue</div><p class="card-desc">Crema de limón ácida y suave, cubierta de merengue tostado.</p><div class="card-foot"><span class="card-price">$24.000</span><button class="card-btn" onclick="addCart('Tarta Limón Merengue',24000)">+ Agregar</button></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEÑAS -->
+<section class="reviews" id="resenas">
+  <p class="eyebrow">Comunidad Dulce Tentación</p>
+  <h2 class="sec-title">Reseñas de nuestros <em>clientes</em></h2>
+  <div class="r-grid" id="reviews-grid"></div>
+  <div id="rf-outer" style="margin-top:3rem;max-width:560px;margin-left:auto;margin-right:auto"></div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec" id="pedido">
+  <p class="eyebrow" style="color:rgba(255,255,255,.72)">✦ Haz tu pedido</p>
+  <h2 class="sec-title">¿Listo para <em style="color:#fff">endulzar</em> tu día?</h2>
+  <p>Agrega tus postres al carrito y completa tu pedido. Puedes realizar tu pedido con al menos <strong>48 horas de anticipación</strong>.</p>
+  <button class="btn-white" onclick="openCartPanel()">🛒 Ver mi Carrito</button>
+</section>
+
+<!-- CONTACTO PEDIDOS ESPECIALES -->
+<section class="contact-sec reveal" id="contacto">
+  <p class="eyebrow">📞 Contáctanos directamente</p>
+  <h2 class="sec-title">Pedidos <em>personales</em> o a mayor escala</h2>
+  <p>¿Tienes algo especial en mente? Para pedidos personalizados, eventos, bodas o al por mayor, contáctanos directamente y lo coordinamos juntos.</p>
+  <div class="contact-card">
+    <div class="contact-icon">📱</div>
+    <div class="contact-info">
+      <span class="contact-label">WhatsApp / Llamadas</span>
+      <span class="contact-number">312 300 8091</span>
+      <span class="contact-sub">Atención de lunes a sábado · 8 am – 7 pm</span>
+    </div>
+  </div>
+  <br/>
+  <a class="contact-wa" href="https://wa.me/573123008091?text=Hola%2C%20quiero%20hacer%20un%20pedido%20especial%20de%20Dulce%20Tentaci%C3%B3n" target="_blank">💬 Escribir por WhatsApp</a>
+</section>
+
+<footer>
+  <div>
+    <div class="f-logo">Dulce <span>Tentación</span></div>
+    <p>Postres artesanales hechos con amor. Ingredientes frescos, sabor auténtico.</p>
+    <p style="margin-top:.9rem;font-size:.73rem;color:#5A3020">📍 Pasto, Nariño, Colombia</p>
+    <p style="margin-top:.6rem;font-size:.8rem;color:var(--caramel)">📱 312 300 8091</p>
+  </div>
+  <div>
+    <h4>Secciones</h4>
+    <ul>
+      <li><a href="#menu">Tortas</a></li>
+      <li><a href="#menu">Cheesecakes</a></li>
+      <li><a href="#menu">Brownies & Galletas</a></li>
+      <li><a href="#menu">Postres Fríos</a></li>
+      <li><a href="#menu">Petit Fours</a></li>
+      <li><a href="#menu">Tartas</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Información</h4>
+    <ul>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#pedido">Hacer Pedido</a></li>
+      <li><a href="#resenas">Reseñas</a></li>
+      <li><a onclick="openShipModal()">Política de Envíos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="f-bottom">
+  <span>© 2025 Dulce Tentación · Todos los derechos reservados</span>
+  <span class="author-tag">Miguel · Ingeniería de Software · 1er Semestre · UCC Pasto</span>
+</div>
+
+<button class="cart-float" onclick="openCartPanel()">🛒 Carrito <span id="cart-count">0</span></button>
+<div id="cart-overlay" onclick="closeCartPanel()"></div>
+
+<div id="cart-panel">
+  <div class="cart-hdr"><span class="cart-ttl">Mi Carrito</span><button class="x-btn" onclick="closeCartPanel()">✕</button></div>
+  <div id="cart-items"><p class="cart-empty" id="cart-empty">Tu carrito está vacío 🍰<br/>Agrega algún postre del menú.</p></div>
+  <div class="cart-foot" id="cart-foot" style="display:none">
+    <div class="cart-total">Total: <span id="cart-total">$0</span></div>
+    <button class="btn-main" style="width:100%" onclick="closeCartPanel();openOrderModal()">✓ Hacer Pedido</button>
+    <button class="btn-clear" onclick="clearCart()">Vaciar carrito</button>
+  </div>
+</div>
+
+<div class="modal-ov" id="order-modal">
+  <div class="modal">
+    <div class="modal-top"><button class="mcx" onclick="closeOrderModal()">✕</button><h3>Formulario de Pedido</h3><p>Completa tus datos para confirmar el pedido</p></div>
+    <div class="modal-body">
+      <div class="steps" id="steps-bar">
+        <div class="step active" id="st1">1. Tu pedido</div>
+        <div class="step" id="st2">2. Tus datos</div>
+        <div class="step" id="st3">3. Entrega</div>
+      </div>
+      <div id="success-screen">
+        <span class="suc-icon">🎉</span>
+        <div class="suc-title">¡Pedido Confirmado!</div>
+        <p class="suc-msg">Recibimos tu pedido. Nos pondremos en contacto contigo para coordinar la entrega.</p>
+        <div class="suc-detail" id="suc-detail"></div>
+        <button class="btn-main" style="width:100%" onclick="closeOrderModal()">Cerrar</button>
+      </div>
+      <div class="step-pg active" id="sp1">
+        <div class="note-box">⏱ Puedes realizar tu pedido con al menos <strong>48 horas de anticipación</strong>.</div>
+        <span class="f-sec">📋 Resumen de tu pedido</span>
+        <div class="ord-sum" id="modal-summary"></div>
+        <div class="fg" style="margin-top:1.2rem"><label>Observaciones <span style="color:#A07850;text-transform:none;font-size:.78rem;letter-spacing:0">(opcional)</span></label><textarea id="obs" placeholder="Ej: sin nuez en los brownies…"></textarea></div>
+      </div>
+      <div class="step-pg" id="sp2">
+        <span class="f-sec">👤 Tus datos de contacto</span>
+        <div class="frow">
+          <div class="fg"><label>Nombre <span class="req">*</span></label><input type="text" id="f-nom" placeholder="Tu nombre"/></div>
+          <div class="fg"><label>Apellido <span class="req">*</span></label><input type="text" id="f-ape" placeholder="Tu apellido"/></div>
+        </div>
+        <div class="fg"><label>WhatsApp <span class="req">*</span></label><input type="tel" id="f-tel" placeholder="300 123 4567"/></div>
+        <div class="fg"><label>Correo <span style="color:#A07850;text-transform:none;font-size:.78rem;letter-spacing:0">(opcional)</span></label><input type="email" id="f-mail" placeholder="tucorreo@email.com"/></div>
+      </div>
+      <div class="step-pg" id="sp3">
+        <span class="f-sec">📦 Información de entrega</span>
+        <div class="fg"><label>Tipo de entrega <span class="req">*</span></label><select id="f-tipo"><option value="">— Selecciona —</option><option value="domicilio">Domicilio (Pasto)</option><option value="recoger">Recoger en punto</option></select></div>
+        <div class="fg" id="dir-wrap" style="display:none"><label>Dirección <span class="req">*</span></label><input type="text" id="f-dir" placeholder="Barrio, calle, número…"/></div>
+        <div class="fg"><label>Fecha deseada <span class="req">*</span></label><input type="date" id="f-fecha"/></div>
+        <div class="fg"><label>Forma de pago <span class="req">*</span></label><select id="f-pago"><option value="">— Selecciona —</option><option value="efectivo">Efectivo</option><option value="transferencia">Transferencia bancaria</option><option value="contraentrega">Pago contra entrega</option></select></div>
+        <div class="fg"><label>Notas adicionales <span style="color:#A07850;text-transform:none;font-size:.78rem;letter-spacing:0">(opcional)</span></label><textarea id="f-notas" placeholder="Instrucciones especiales para la entrega…"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-foot" id="modal-foot">
+      <button class="btn-ghost" id="btn-prev" onclick="prevStep()" style="margin:0;display:none">← Anterior</button>
+      <button class="btn-main" id="btn-next" onclick="nextStep()" style="flex:1">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-ov" id="ship-modal">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-top"><button class="mcx" onclick="closeShipModal()">✕</button><h3>Política de Envíos</h3><p>Todo lo que necesitas saber</p></div>
+    <div class="modal-body">
+      <div class="sr"><span class="si">⏱</span><p><strong>Anticipación mínima</strong>Puedes realizar tu pedido con al menos 48 horas de anticipación.</p></div>
+      <div class="sr"><span class="si">📦</span><p><strong>Entrega local</strong>Hacemos entregas en Pasto. El costo se acuerda al confirmar el pedido.</p></div>
+      <div class="sr"><span class="si">🎂</span><p><strong>Pedidos especiales</strong>Preparamos postres personalizados para eventos. Consulta con anticipación.</p></div>
+      <div class="sr"><span class="si">❄️</span><p><strong>Conservación</strong>Los postres fríos deben refrigerarse. Se entregan en empaque adecuado.</p></div>
+      <div class="sr"><span class="si">💳</span><p><strong>Formas de pago</strong>Efectivo, transferencia o pago contra entrega.</p></div>
+      <button class="btn-main" style="margin-top:1.4rem;width:100%" onclick="closeShipModal()">Entendido</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Reveal
+const ro=new IntersectionObserver((es)=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*70);ro.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+// Cart
+let cart=[];
+function addCart(name,price){const ex=cart.find(i=>i.name===name);if(ex)ex.qty++;else cart.push({name,price,qty:1});renderCart();openCartPanel();}
+function changeQty(name,d){const it=cart.find(i=>i.name===name);if(!it)return;it.qty+=d;if(it.qty<=0)cart=cart.filter(i=>i.name!==name);renderCart();}
+function clearCart(){cart=[];renderCart();}
+function renderCart(){
+  const box=document.getElementById('cart-items'),emp=document.getElementById('cart-empty'),foot=document.getElementById('cart-foot');
+  const qty=cart.reduce((s,i)=>s+i.qty,0),tot=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('cart-count').textContent=qty;
+  document.getElementById('cart-total').textContent='$'+tot.toLocaleString('es-CO');
+  box.querySelectorAll('.ci').forEach(el=>el.remove());
+  if(!cart.length){emp.style.display='block';foot.style.display='none';return;}
+  emp.style.display='none';foot.style.display='block';
+  cart.forEach(it=>{
+    const sn=it.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    const d=document.createElement('div');d.className='ci';
+    d.innerHTML=`<div><div class="ci-name">${it.name}</div><div class="ci-meta"><div class="qc"><button class="qb" onclick="changeQty('${sn}',-1)">−</button><span class="qn">${it.qty}</span><button class="qb" onclick="changeQty('${sn}',1)">+</button></div><span class="ci-price">$${(it.price*it.qty).toLocaleString('es-CO')}</span></div></div><button class="ci-rm" onclick="changeQty('${sn}',-999)">🗑</button>`;
+    box.appendChild(d);
+  });
+}
+function openCartPanel(){document.getElementById('cart-panel').classList.add('open');document.getElementById('cart-overlay').classList.add('open');}
+function closeCartPanel(){document.getElementById('cart-panel').classList.remove('open');document.getElementById('cart-overlay').classList.remove('open');}
+
+// Order modal
+let curStep=1;
+function openOrderModal(){
+  if(!cart.length){alert('Tu carrito está vacío. Agrega productos primero.');return;}
+  curStep=1;renderSteps();renderSummary();
+  document.getElementById('success-screen').style.display='none';
+  document.getElementById('steps-bar').style.display='flex';
+  document.getElementById('modal-foot').style.display='flex';
+  const min=new Date();min.setDate(min.getDate()+2);
+  document.getElementById('f-fecha').min=min.toISOString().split('T')[0];
+  document.getElementById('order-modal').classList.add('open');
+}
+function closeOrderModal(){document.getElementById('order-modal').classList.remove('open');}
+function renderSummary(){
+  const tot=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  let h='<div class="ord-sum-ttl">Productos seleccionados</div>';
+  cart.forEach(i=>{h+=`<div class="ord-sum-row"><span>${i.name} ×${i.qty}</span><span>$${(i.price*i.qty).toLocaleString('es-CO')}</span></div>`;});
+  h+=`<div class="ord-sum-tot"><span>Total</span><span>$${tot.toLocaleString('es-CO')}</span></div>`;
+  document.getElementById('modal-summary').innerHTML=h;
+}
+function renderSteps(){
+  for(let i=1;i<=3;i++){document.getElementById('sp'+i).classList.remove('active');const t=document.getElementById('st'+i);t.classList.remove('active','done');if(i<curStep)t.classList.add('done');else if(i===curStep)t.classList.add('active');}
+  document.getElementById('sp'+curStep).classList.add('active');
+  document.getElementById('btn-prev').style.display=curStep>1?'block':'none';
+  document.getElementById('btn-next').textContent=curStep===3?'✓ Confirmar Pedido':'Siguiente →';
+}
+function validate(){
+  if(curStep===2){if(!document.getElementById('f-nom').value.trim()){alert('Ingresa tu nombre.');return false;}if(!document.getElementById('f-ape').value.trim()){alert('Ingresa tu apellido.');return false;}if(!document.getElementById('f-tel').value.trim()){alert('Ingresa tu WhatsApp.');return false;}}
+  if(curStep===3){const t=document.getElementById('f-tipo').value;if(!t){alert('Selecciona tipo de entrega.');return false;}if(t==='domicilio'&&!document.getElementById('f-dir').value.trim()){alert('Ingresa tu dirección.');return false;}if(!document.getElementById('f-fecha').value){alert('Selecciona la fecha.');return false;}if(!document.getElementById('f-pago').value){alert('Selecciona forma de pago.');return false;}}
+  return true;
+}
+function nextStep(){if(!validate())return;if(curStep<3){curStep++;renderSteps();}else submitOrder();}
+function prevStep(){if(curStep>1){curStep--;renderSteps();}}
+document.getElementById('f-tipo').addEventListener('change',function(){document.getElementById('dir-wrap').style.display=this.value==='domicilio'?'block':'none';});
+function submitOrder(){
+  const nom=document.getElementById('f-nom').value.trim(),ape=document.getElementById('f-ape').value.trim(),tel=document.getElementById('f-tel').value.trim(),tipo=document.getElementById('f-tipo').value,fecha=document.getElementById('f-fecha').value,pago=document.getElementById('f-pago').value,dir=document.getElementById('f-dir').value.trim(),obs=document.getElementById('obs').value.trim(),notas=document.getElementById('f-notas').value.trim();
+  const tot=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const pagoL={efectivo:'Efectivo',transferencia:'Transferencia',contraentrega:'Contra entrega'}[pago];
+  const tipoL={domicilio:'Domicilio',recoger:'Recoger en punto'}[tipo];
+  let det=`<p><strong>Cliente:</strong> ${nom} ${ape}</p><p><strong>WhatsApp:</strong> ${tel}</p><p><strong>Entrega:</strong> ${tipoL}${tipo==='domicilio'?' — '+dir:''}</p><p><strong>Fecha:</strong> ${fecha}</p><p><strong>Pago:</strong> ${pagoL}</p><p style="margin-top:.5rem;border-top:1px solid rgba(200,136,58,.2);padding-top:.5rem"><strong>Total:</strong> $${tot.toLocaleString('es-CO')}</p>`;
+  if(obs)det+=`<p><strong>Obs.:</strong> ${obs}</p>`;if(notas)det+=`<p><strong>Notas:</strong> ${notas}</p>`;
+  document.getElementById('suc-detail').innerHTML=det;
+  document.getElementById('steps-bar').style.display='none';
+  for(let i=1;i<=3;i++)document.getElementById('sp'+i).classList.remove('active');
+  document.getElementById('modal-foot').style.display='none';
+  document.getElementById('success-screen').style.display='block';
+  cart=[];renderCart();
+  ['f-nom','f-ape','f-tel','f-mail','f-dir','f-fecha','obs','f-notas'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('f-tipo').value='';document.getElementById('f-pago').value='';document.getElementById('dir-wrap').style.display='none';
+}
+
+// Reviews – solo 1 por dispositivo (localStorage)
+let selStars=0;
+let reviews=JSON.parse(localStorage.getItem('dt-reviews')||'[]');
+const hasReviewed=localStorage.getItem('dt-reviewed')==='1';
+
+function renderReviews(){
+  const grid=document.getElementById('reviews-grid');grid.innerHTML='';
+  if(!reviews.length){grid.innerHTML='<p class="no-r">Sé el primero en dejar una reseña ✨</p>';return;}
+  [...reviews].reverse().forEach(r=>{
+    const c=document.createElement('div');c.className='r-card';
+    c.innerHTML=`<div class="r-stars">${'★'.repeat(r.stars)+'☆'.repeat(5-r.stars)}</div><p class="r-text">"${r.texto}"</p><span class="r-author">— ${r.nombre}</span><div class="r-date">${r.fecha}</div>`;
+    grid.appendChild(c);
+  });
+}
+
+function buildReviewForm(){
+  const outer=document.getElementById('rf-outer');
+  if(hasReviewed){
+    outer.innerHTML='<div class="rf-used">✅ Ya dejaste tu reseña. ¡Gracias por tu opinión!</div>';return;
+  }
+  outer.innerHTML=`
+    <div class="rf-wrap">
+      <div class="rf-title">¿Ya probaste nuestros postres?</div>
+      <p class="rf-sub">Déjanos tu opinión — solo se puede dejar una reseña por persona.</p>
+      <div class="rf">
+        <label>Tu nombre <span style="color:var(--caramel)">*</span></label>
+        <input type="text" id="r-nombre" placeholder="¿Cómo te llamas?"/>
+        <label>Calificación <span style="color:var(--caramel)">*</span></label>
+        <div class="sp" id="star-picker">
+          <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+        </div>
+        <label>Tu reseña <span style="color:var(--caramel)">*</span></label>
+        <textarea id="r-texto" placeholder="Cuéntanos tu experiencia…"></textarea>
+      </div>
+      <button class="btn-main rf-btn" onclick="submitReview()">Publicar reseña</button>
+    </div>`;
+  // Star picker
+  document.getElementById('star-picker').addEventListener('mouseover',function(e){if(!e.target.dataset.v)return;const v=+e.target.dataset.v;document.querySelectorAll('#star-picker span').forEach(s=>s.classList.toggle('lit',+s.dataset.v<=v));});
+  document.getElementById('star-picker').addEventListener('mouseleave',function(){document.querySelectorAll('#star-picker span').forEach(s=>s.classList.toggle('lit',+s.dataset.v<=selStars));});
+  document.getElementById('star-picker').addEventListener('click',function(e){if(!e.target.dataset.v)return;selStars=+e.target.dataset.v;document.querySelectorAll('#star-picker span').forEach(s=>s.classList.toggle('lit',+s.dataset.v<=selStars));});
+}
+
+function submitReview(){
+  const nom=document.getElementById('r-nombre').value.trim();
+  const txt=document.getElementById('r-texto').value.trim();
+  if(!nom){alert('Por favor ingresa tu nombre.');return;}
+  if(!selStars){alert('Por favor selecciona una calificación.');return;}
+  if(!txt){alert('Por favor escribe tu reseña.');return;}
+  const hoy=new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'});
+  reviews.push({nombre:nom,stars:selStars,texto:txt,fecha:hoy});
+  localStorage.setItem('dt-reviews',JSON.stringify(reviews));
+  localStorage.setItem('dt-reviewed','1');
+  renderReviews();
+  document.getElementById('rf-outer').innerHTML='<div class="rf-used">✅ ¡Gracias por tu reseña, '+nom+'! Ya está visible arriba.</div>';
+  document.getElementById('reviews-grid').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+renderReviews();
+buildReviewForm();
+
+// Modals
+function openShipModal(){document.getElementById('ship-modal').classList.add('open');}
+function closeShipModal(){document.getElementById('ship-modal').classList.remove('open');}
+document.querySelectorAll('.modal-ov').forEach(o=>{o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});});
+</script>
+</body>
+</html>
